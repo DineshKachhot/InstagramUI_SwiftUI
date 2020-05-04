@@ -35,8 +35,9 @@ struct ContentView: View {
                 }
             .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
             }
-            .navigationBarTitle(Text("Instagram").font(.title), displayMode: .inline)
-            .navigationBarItems(leading: Image(systemName: "camera").font(Font.system(size: 24)), trailing: Image(systemName: "paperplane").font(Font.system(size: 24)))
+                // Custom navigation title is not yet available
+                .navigationBarTitle(Text("Instagram"), displayMode: .inline)
+                .navigationBarItems(leading: Button(action: { print("Camera button pressed") }) { Image(systemName: "camera").font(Font.system(size: 24)).foregroundColor(.white) } , trailing: Button(action: { print("Message button pressed") }) { Image(systemName: "paperplane").font(Font.system(size: 24)).foregroundColor(.white) } )
         }
     }
 }
@@ -44,21 +45,23 @@ struct ContentView: View {
 struct PostView: View {
     var post: Post
     @State private var commentText: String = ""
+    @State private var isliked = false
+    @State private var isBookmarked = false
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Image(post.profileImage).resizable().frame(width: 40, height: 40).cornerRadius(.infinity)
                 Text(post.username).fontWeight(.bold)
                 Spacer()
-                Image(systemName: "ellipsis")
+                Button(action: { print("More action clicked") }) {Image(systemName: "ellipsis")}.buttonStyle(BorderlessButtonStyle()).foregroundColor(.white)
             }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
             Image(post.postImage).resizable().aspectRatio(contentMode: .fit)
             HStack(spacing: 20) {
-                Image(systemName: "heart")
-                Image(systemName: "message")
-                Image(systemName: "paperplane")
+                Button(action: { print("Like clicked"); self.isliked = !self.isliked }) { !isliked ? Image(systemName: "heart") : Image(systemName: "suit.heart.fill") }.buttonStyle(BorderlessButtonStyle()).foregroundColor(!isliked ? .white : .red)
+                Button(action: { print("Message clicked") }) { Image(systemName: "message") }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.white)
+                Button(action: { print("Send clicked") }) { Image(systemName: "paperplane") }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.white)
                 Spacer()
-                Image(systemName: "bookmark")
+                Button(action: { print("Bookmark clicked"); self.isBookmarked = !self.isBookmarked }) { self.isBookmarked ? Image(systemName: "bookmark.fill") : Image(systemName: "bookmark") }.buttonStyle(BorderlessButtonStyle()).foregroundColor(.white)
             }.padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
                 .font(Font.system(size: 24))
             
@@ -74,8 +77,9 @@ struct PostView: View {
                 Image("me").resizable().frame(width: 30, height: 30).cornerRadius(.infinity)
                 TextField("Add a comment...", text: $commentText)
                 Spacer()
-                Text("👌  🎉")
-                Image(systemName: "plus.circle").foregroundColor(.gray)
+                Button(action: { print("👌 action clicked") }) {Text("👌").foregroundColor(.gray)}.buttonStyle(BorderlessButtonStyle())
+                Button(action: { print("🎉 action clicked") }) {Text("🎉").foregroundColor(.gray)}.buttonStyle(BorderlessButtonStyle())
+                Button(action: { print("Add action clicked") }) {Image(systemName: "plus.circle").foregroundColor(.gray)}.buttonStyle(BorderlessButtonStyle())
                 }
             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
             Text(post.timeSinceNow).foregroundColor(.gray).padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)).font(.footnote)
@@ -96,7 +100,7 @@ struct StoryView: View {
                     Text("Your story").font(.caption).foregroundColor(.gray)
                 }
                 
-                StoryImage(imageName: "ashish", userName: "ashish_chavda")
+                StoryImage(imageName: "ashish", userName: "ashish_chav...")
                 StoryImage(imageName: "fenny", userName: "estefanny_isa")
                 StoryImage(imageName: "michelly", userName: "michelle_le...")
                 StoryImage(imageName: "sandy", userName: "sandip_web...")
