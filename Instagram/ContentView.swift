@@ -22,6 +22,9 @@ struct Post: Identifiable {
 }
 
 struct ContentView: View {
+    
+    @Environment(\.colorScheme) var colorScheme
+    
     var posts = [Post(profileImage: "kapil_shrma", username: "kapilshrma", postImage: "post_kapil", content: "kapilshrma: बहुत ही दुखद समाचार। कहते हैं समय सब घाव भर देता है।लेकिन इन दो दिनो में जो चोट दिल को पहुँची है। वक़्त को भी बहुत वक्त लगेगा। अलविदा Rishi जी 💔🙏", likedBy: "Liked by ashish and 14,60,542 others", commentCount: "View all 10,083 comments", comments: ["harbhajan3: 🙏", "guujanvm : 🙏"], timeSinceNow: "3 hours ago"),
         Post(profileImage: "hardik_profile", username: "hardikpandya93", postImage: "hardik_post", content: "hardikpandya93 Music is art 🎧 Thank you @boat.nirvana for this amazing artwork. Love it 😊", likedBy: "51,183 Likes", commentCount: "View all 406 comments", comments: ["_aakankshaa05_ Fabmouse😻", "07devil__ https://chat.whatsapp.com/HZBwARIGWJh1TcmhIngxZ2"], timeSinceNow: "4 hour ago")]
     
@@ -37,7 +40,7 @@ struct ContentView: View {
             }
                 // Custom navigation title is not yet available
                 .navigationBarTitle(Text("Instagram"), displayMode: .inline)
-                .navigationBarItems(leading: Button(action: { print("Camera button pressed") }) { Image(systemName: "camera").font(Font.system(size: 24)).foregroundColor(.white) } , trailing: Button(action: { print("Message button pressed") }) { Image(systemName: "paperplane").font(Font.system(size: 24)).foregroundColor(.white) } )
+                .navigationBarItems(leading: Button(action: { print("Camera button pressed") }) { Image(systemName: "camera").font(Font.system(size: 24)).foregroundColor(colorScheme == .dark ? .white : .black) } , trailing: Button(action: { print("Message button pressed") }) { Image(systemName: "paperplane").font(Font.system(size: 24)).foregroundColor(colorScheme == .dark ? .white : .black) } )
         }
     }
 }
